@@ -6,6 +6,6 @@ in their content and systems.
 
 ## Resources
 
-- [Quick Start Guide]() - Designed to get you up and going with the integration toolkit.
+- [Quick Start Guide](https://github.com/adlnet/scorm4unity/wiki/Quickstart) - Designed to get you up and going with the integration toolkit.
 - [Tutorial](https://github.com/adlnet/scorm4unity/wiki/Unity-SCORM-Integration-Tutorial) - A more in-depth tutorial on how to take an existing game and integrate it with SCORM. Comes with example game and guides you through the integration process step-by-step.
 - [Frequently Asked Questions](https://github.com/adlnet/scorm4unity/wiki/Frequently-Asked-Questions)
