@@ -117,19 +117,20 @@ public class ScormExport : EditorWindow {
 				File.Delete(zipfile);
 			   
 			Ionic.Zip.ZipFile zip = new Ionic.Zip.ZipFile(zipfile);
-			zip.AddDirectory(tempdir);
+			zip.AddDirectory(tempdir); 
 			
-			if(PlayerPrefs.GetInt("SCORM_Version") == 0)
+			if(PlayerPrefs.GetInt("SCORM_Version") < 3)
 			{
 				zip.AddItem(Application.dataPath + "/ADL SCORM/Plugins/2004");
 				string manifest = 
 								"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + 
-								"<!--This is a Reload version 1.1.1 SCORM 1.3 Content Package document-->"+
-								"<!--Spawned from the Reload Content Package Generator - http://www.reload.ac.uk-->"+
 								"<manifest xmlns=\"http://www.imsglobal.org/xsd/imscp_v1p1\" xmlns:imsmd=\"http://www.imsglobal.org/xsd/imsmd_v1p2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:adlcp=\"http://www.adlnet.org/xsd/adlcp_v1p3\" xmlns:imsss=\"http://www.imsglobal.org/xsd/imsss\" xmlns:adlseq=\"http://www.adlnet.org/xsd/adlseq_v1p3\" xmlns:adlnav=\"http://www.adlnet.org/xsd/adlnav_v1p3\" identifier=\"MANIFEST-AECEF15E-06B8-1FAB-5289-73A0B058E2DD\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imscp_v1p1 imscp_v1p1.xsd http://www.imsglobal.org/xsd/imsmd_v1p2 imsmd_v1p2p2.xsd http://www.adlnet.org/xsd/adlcp_v1p3 adlcp_v1p3.xsd http://www.imsglobal.org/xsd/imsss imsss_v1p0.xsd http://www.adlnet.org/xsd/adlseq_v1p3 adlseq_v1p3.xsd http://www.adlnet.org/xsd/adlnav_v1p3 adlnav_v1p3.xsd\" version=\"1.3\">"+
 								"  <metadata>"+
-								"    <schema>ADL SCORM</schema>"+
-								"    <schemaversion>2004 4th Edition</schemaversion>"+
+								"    <schema>ADL SCORM</schema>"
+								+((PlayerPrefs.GetInt("SCORM_Version") == 0)?"    <schemaversion>2004 4th Edition</schemaversion>":"")
+								+((PlayerPrefs.GetInt("SCORM_Version") == 1)?"    <schemaversion>2004 3th Edition</schemaversion>":"")
+								+((PlayerPrefs.GetInt("SCORM_Version") == 2)?"    <schemaversion>2004 CAM 1.3</schemaversion>":"")
+								+
 								"  </metadata>"+
 								"  <organizations default=\"ORG-8770D9D9-AD66-06BB-9A3D-E87784C697FF\">"+
 								"    <organization identifier=\"ORG-8770D9D9-AD66-06BB-9A3D-E87784C697FF\">"+
@@ -269,7 +270,7 @@ public class ScormExport : EditorWindow {
 			PlayerPrefs.SetString("Data_From_Lms", EditorGUILayout.TextField(new GUIContent("Data from LMS:","User-defined string value that can be used as initial learning experience state data."), PlayerPrefs.GetString("Data_From_Lms")));
 			
 			//2004
-			if(PlayerPrefs.GetInt("SCORM_Version") == 0)
+			if(PlayerPrefs.GetInt("SCORM_Version") < 3)
 		 	{
 				bool satisified = GUILayout.Toggle(System.Convert.ToBoolean(PlayerPrefs.GetInt("satisfiedByMeasure")),new GUIContent("Satisfied By Measure","If true, then this objective's satisfaction status will be determined by the score's relation to the passing score."));
 				PlayerPrefs.SetInt("satisfiedByMeasure",System.Convert.ToInt16(satisified));
@@ -371,7 +372,7 @@ public class ScormExport : EditorWindow {
 			//PlayerPrefs.SetInt("SCORM_Version",GUILayout.SelectionGrid(PlayerPrefs.GetInt("SCORM_Version"),new string[]{"SCORM 2004 v. 4","SCORM 1.2"},2));
 	        
 				
-			PlayerPrefs.SetInt("SCORM_Version",EditorGUILayout.Popup(PlayerPrefs.GetInt("SCORM_Version"),new string[]{"SCORM 2004 v. 4","SCORM 1.2"},GUILayout.ExpandWidth(false)));
+			PlayerPrefs.SetInt("SCORM_Version",EditorGUILayout.Popup(PlayerPrefs.GetInt("SCORM_Version"),new string[]{"SCORM 2004 v. 4","SCORM 2004 v. 3","SCORM 2004 v. 2","SCORM 1.2"},GUILayout.ExpandWidth(false)));
 			
 			
 			

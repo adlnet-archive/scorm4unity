@@ -203,7 +203,7 @@ function doGetValue(identifier,objectname,callbackname,randomnumber)
       
       var error = ErrorHandler();
 	  
-	  DebugPrint(dotBindingName + ":" + result);
+	  //DebugPrint(dotBindingName + ":" + result);
 	  
       if (error.code != _NoError.code)
       {
@@ -271,7 +271,7 @@ function doSetValue(identifier,value,objectname,callbackname,randomnumber)
 	     result = api.LMSSetValue(dotBindingName, value);
 	  }
 	  
-	  DebugPrint(dotBindingName + ":" + value + ":" + result);
+	  //DebugPrint(dotBindingName + ":" + value + ":" + result);
 	  
       if (result.toString() != "true")
       {
@@ -307,12 +307,12 @@ function doIsScorm2004(objectname,callbackname,randomnumber)
    var result = "false";
    if (api == null)
    {
-      DebugPrint("Unable to locate the LMS's API Implementation.\nSetValue was not successful.");
+      //DebugPrint("Unable to locate the LMS's API Implementation.\nSetValue was not successful.");
    }
    else if (!initialized && !doInitialize())
    {
       var error = ErrorHandler();
-      DebugPrint("doIsScorm2004 failed - Could not initialize communication with the LMS - error code: " + error.code);
+      //DebugPrint("doIsScorm2004 failed - Could not initialize communication with the LMS - error code: " + error.code);
    }
   
    GetUnity().SendMessage(objectname, callbackname, versionIsSCORM2004 + "|"+"|"+"|" + randomnumber);
