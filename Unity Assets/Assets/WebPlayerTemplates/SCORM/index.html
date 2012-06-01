@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Unity Web Player | %UNITY_WEB_NAME%</title>
+		<script type="text/javascript" src="%UNITY_UNITYOBJECT_URL%"></script>
+		<script type="text/javascript" src="./scripts/ScormSimulator.js"></script>
+		<script type="text/javascript" src="./scripts/scorm.js"></script>
+		
+		<script type="text/javascript">
+		<!--
+		function GetUnity() {
+			if (typeof unityObject != "undefined") {
+				return unityObject.getObjectById("unityPlayer");
+			}
+			return null;
+		}
+		if (typeof unityObject != "undefined") {
+			var params = {
+				backgroundcolor: "FFFFFF",
+				textcolor: "000000",
+				//logoimage: "./images/thumbnail.png",
+				//progressbarimage: "./images/scorm_progres_bar.png"
+			};
+			unityObject.embedUnity("unityPlayer", "%UNITY_WEB_PATH%", %UNITY_WIDTH%, %UNITY_HEIGHT%, params);
+			%UNITY_SET_BASE_DOWNLOAD_URL%
+		}
+		-->
+		</script>
+		<style type="text/css">
+		<!--
+		body {
+			font-family: Helvetica, Verdana, Arial, sans-serif;
+			background-color: white;
+			color: black;
+			text-align: center;
+		}
+		a:link, a:visited {
+			color: #000;
+		}
+		a:active, a:hover {
+			color: #666;
+		}
+		p.header {
+			font-size: small;
+		}
+		p.header span {
+			font-weight: bold;
+		}
+		p.footer {
+			font-size: x-small;
+		}
+		div.content {
+			margin: auto;
+			width: %UNITY_WIDTH%px;
+		}
+		div.missing {
+			margin: auto;
+			position: relative;
+			top: 50%;
+			width: 193px;
+		}
+		div.missing a {
+			height: 63px;
+			position: relative;
+			top: -31px;
+		}
+		div.missing img {
+			border-width: 0px;
+		}
+		div#unityPlayer {
+			cursor: default;
+			height: %UNITY_HEIGHT%px;
+			width: %UNITY_WIDTH%px;
+		}
+		-->
+		</style>
+	</head>
+	<body>
+		<p class="header"><span>Unity SCO | </span>%UNITY_WEB_NAME%</p>%UNITY_BETA_WARNING%
+		<div class="content">
+			<div id="unityPlayer">
+				<div class="missing">
+					<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
+						<img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />
+					</a>
+				</div>
+			</div>
+		</div>
+		<div ID='console'></div>
+		<p class="footer">&laquo; created with <a href="http://unity3d.com/unity/" title="Go to unity3d.com">Unity</a> &raquo;</p>
+	</body>
+</html>
