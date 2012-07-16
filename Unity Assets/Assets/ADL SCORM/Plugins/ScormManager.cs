@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using System.Collections;
+using System.Threading;
 using ScormSerialization;
 using Scorm2004;
 public class ScormManager : MonoBehaviour
@@ -37,6 +38,7 @@ public class ScormManager : MonoBehaviour
 	static int MainThreadID;
 	static List<string> Log;
     
+	public delegate void BroadcastDelegate(string message, UnityEngine.SendMessageOptions options);
 	
 	///<summary>
 	///Internal communication with Javascript components
@@ -100,11 +102,14 @@ public class ScormManager : MonoBehaviour
 	///Read all the data from the LMS into the internal data structure. Runs in a seperate thread.
 	///Will fire "Scorm_Initialize_Complete" when the datamodel is ready to be manipulated
 	///</remarks> 
-	private static void Initialize_imp()
+	private static void Initialize_imp( object b )
 	{
 		if(!CheckThread())return;
+		
+		BroadcastDelegate broadcast = (BroadcastDelegate) b;
 		ScormBridge = new Unity_ScormBridge(ObjectName,"ScormValueCallback");
 		ScormBridge.Initialize();
+		
 		try{
 			if(ScormBridge.IsScorm2004)
 			{
@@ -123,7 +128,7 @@ public class ScormManager : MonoBehaviour
 			UnityEngine.Application.ExternalCall("DebugPrint", "***ERROR***" + e.Message +"<br/>" + e.StackTrace + "<br/>" + e.Source );	
 		}
 		Initialized = true;
-		GameObject.Find(ObjectName).BroadcastMessage("Scorm_Initialize_Complete",SendMessageOptions.DontRequireReceiver);
+		broadcast("Scorm_Initialize_Complete",SendMessageOptions.DontRequireReceiver);
 	}
 	///<summary>
 	///Read the student data in from the LMS
@@ -134,9 +139,9 @@ public class ScormManager : MonoBehaviour
 	///</remarks> 
 	public static void Initialize()
 	{
-		System.Threading.ThreadStart start = new System.Threading.ThreadStart(Initialize_imp);
-        System.Threading.Thread t = new System.Threading.Thread(start);
-        t.Start();
+		ParameterizedThreadStart start = new ParameterizedThreadStart(Initialize_imp);
+        Thread t = new Thread(start);
+        t.Start( new BroadcastDelegate(GameObject.Find(ObjectName).BroadcastMessage) );
 	}
 	///<summary>
 	///Check that the running thread is not the Unity Thread
