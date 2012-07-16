@@ -47,28 +47,32 @@ public class ScormManager : MonoBehaviour
 	///Serializes the entire SCORM datamodel object to the correct API calls, and sends to the 
 	///Javascript API
 	///</remarks> 
-    private static void SubmitStudentData_imp()
+    private static void SubmitStudentData_imp( object b )
 	{
+		BroadcastDelegate broadcast = (BroadcastDelegate) b;
+		
 		try{
-		if(!CheckThread())return;
-		WaitForInitialize(); 
-		if(ScormBridge.IsScorm2004)
-		{
-	        ScormSerializer serializer = new ScormSerializer(StudentRecord);
-	        serializer.Serialize(ScormBridge);
-			ScormBridge.Commit();
-		}else
-		{
-			Scorm1_2.DataModel tempdata = ScormVersionConversion.DataModel.Translate(StudentRecord);
-			ScormSerializer serializer = new ScormSerializer(tempdata);
-	        serializer.Serialize(ScormBridge);
-			ScormBridge.Commit();	
-		}
+			if(!CheckThread())return;
+			WaitForInitialize(); 
+			if(ScormBridge.IsScorm2004)
+			{
+				ScormSerializer serializer = new ScormSerializer(StudentRecord);
+				serializer.Serialize(ScormBridge);
+				ScormBridge.Commit();
+			}else
+			{
+				Scorm1_2.DataModel tempdata = ScormVersionConversion.DataModel.Translate(StudentRecord);
+				ScormSerializer serializer = new ScormSerializer(tempdata);
+				serializer.Serialize(ScormBridge);
+				ScormBridge.Commit();	
+			}
 		}catch(System.Exception e)
 		{
-				UnityEngine.Application.ExternalCall("DebugPrint", "***ERROR***" + e.Message +"<br/>" + e.StackTrace + "<br/>" + e.Source );
+			UnityEngine.Application.ExternalCall("DebugPrint", "***ERROR***" + e.Message +"<br/>" 
+				+ e.StackTrace + "<br/>" + e.Source
+			);
 		}
-		GameObject.Find(ObjectName).BroadcastMessage("Scorm_Commit_Complete");
+		broadcast("Scorm_Commit_Complete", SendMessageOptions.RequireReceiver);
     }
 	///<summary>
 	///Write all the modifications to the Student data to the LMS
@@ -80,9 +84,9 @@ public class ScormManager : MonoBehaviour
 	///</remarks> 
 	public static void Commit()
 	{
-		System.Threading.ThreadStart start = new System.Threading.ThreadStart(SubmitStudentData_imp);
-        System.Threading.Thread t = new System.Threading.Thread(start);
-        t.Start();
+		ParameterizedThreadStart start = new ParameterizedThreadStart(SubmitStudentData_imp);
+		Thread t = new Thread(start);
+		t.Start ( new BroadcastDelegate(GameObject.Find(ObjectName).BroadcastMessage) );
 	}
 	///<summary>
 	///Close the course. Be sure to call Commit first if you want to save your data.
