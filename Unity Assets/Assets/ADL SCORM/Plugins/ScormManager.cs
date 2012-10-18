@@ -1,6 +1,6 @@
 ﻿/***********************************************************************************************************************
  *
- * Unity-SCORM Integration Toolkit Version 1.2 Beta
+ * Unity-SCORM Integration Toolkit Version 1.3 Beta
  * ==========================================
  *
  * Copyright (C) 2011, by ADL (Advance Distributed Learning). (http://www.adlnet.gov)
@@ -106,11 +106,11 @@ public class ScormManager : MonoBehaviour
 	///Read all the data from the LMS into the internal data structure. Runs in a seperate thread.
 	///Will fire "Scorm_Initialize_Complete" when the datamodel is ready to be manipulated
 	///</remarks> 
-	private static void Initialize_imp( object b )
+	private static void Initialize_imp(  )
 	{
 		if(!CheckThread())return;
 		
-		BroadcastDelegate broadcast = (BroadcastDelegate) b;
+		
 		ScormBridge = new Unity_ScormBridge(ObjectName,"ScormValueCallback");
 		ScormBridge.Initialize();
 		
@@ -132,7 +132,26 @@ public class ScormManager : MonoBehaviour
 			UnityEngine.Application.ExternalCall("DebugPrint", "***ERROR***" + e.Message +"<br/>" + e.StackTrace + "<br/>" + e.Source );	
 		}
 		Initialized = true;
-		broadcast("Scorm_Initialize_Complete",SendMessageOptions.DontRequireReceiver);
+
+	}
+	
+	public IEnumerator waitForInitializeFinish()
+	{
+		UnityEngine.Application.ExternalEval("DebugPrint(\"Things work! (wait for init)\");" );
+		System.Threading.ThreadStart start = new System.Threading.ThreadStart(Initialize_imp);
+        System.Threading.Thread t = new System.Threading.Thread(start);
+        t.Start();
+		while( t.IsAlive ){
+			yield return new WaitForSeconds(0.5f);
+			UnityEngine.Application.ExternalEval("DebugPrint(\"Things work! (waiting...)\");" );
+		}
+		UnityEngine.Application.ExternalEval("DebugPrint(\"Things work! (done)\");" );
+		GameObject.Find(ObjectName).BroadcastMessage("Scorm_Initialize_Complete",SendMessageOptions.DontRequireReceiver);
+	}
+	public void BeginInitializationCoroutine()
+	{
+		UnityEngine.Application.ExternalEval("DebugPrint(\"Things work (begin init)!\");" );
+		this.StartCoroutine( "waitForInitializeFinish" );
 	}
 	///<summary>
 	///Read the student data in from the LMS
@@ -143,9 +162,8 @@ public class ScormManager : MonoBehaviour
 	///</remarks> 
 	public static void Initialize()
 	{
-		ParameterizedThreadStart start = new ParameterizedThreadStart(Initialize_imp);
-        Thread t = new Thread(start);
-        t.Start( new BroadcastDelegate(GameObject.Find(ObjectName).BroadcastMessage) );
+		UnityEngine.Application.ExternalEval("DebugPrint(\"Things work! (init)\");" );
+		GameObject.Find(ObjectName).BroadcastMessage("BeginInitializationCoroutine");
 	}
 	///<summary>
 	///Check that the running thread is not the Unity Thread
@@ -175,6 +193,7 @@ public class ScormManager : MonoBehaviour
         ObjectName = this.gameObject.name;
 		Log = new List<string>();
 		MainThreadID = System.Threading.Thread.CurrentThread.ManagedThreadId;
+		UnityEngine.Application.ExternalEval("DebugPrint(\"Things work (start)\");" );
 		Initialize();
     }
 	///<summary>

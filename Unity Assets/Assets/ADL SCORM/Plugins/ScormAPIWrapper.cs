@@ -1,6 +1,6 @@
 ﻿/***********************************************************************************************************************
  *
- * Unity-SCORM Integration Toolkit Version 1.2 Beta
+ * Unity-SCORM Integration Toolkit Version 1.3 Beta
  * ==========================================
  *
  * Copyright (C) 2011, by ADL (Advance Distributed Learning). (http://www.adlnet.gov)
@@ -38,8 +38,8 @@ namespace ScormSerialization
 	///</remarks>
 	public class Unity_ScormBridge : ScormWrapper
 	{
-        int TimeToWaitForReply = 500;
-        int TimePerPoll = 1;
+        int TimeToWaitForReply = 15000;
+        int TimePerPoll = 10;
         string CallbackObjectName;
         string CallbackFunctionName;
         Dictionary<int, APICallResult> CallbackValues;
