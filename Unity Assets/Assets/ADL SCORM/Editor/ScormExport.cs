@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
  *
- * Unity-SCORM Integration Toolkit Version 1.3 Beta
+ * Unity-SCORM Integration Toolkit Version 1.4 Beta
  * ==========================================
  *
  * Copyright (C) 2011, by ADL (Advance Distributed Learning). (http://www.adlnet.gov)
@@ -72,7 +72,7 @@ public class ScormExport : EditorWindow {
     [MenuItem("SCORM/About SCORM Integration",false,0)]
     static void About()
     {
-		EditorUtility.DisplayDialog("Unity-SCORM Integration Toolkit Version 1.3 Beta","This software is a demonstation of integration between web deployed immersive 3D training and a Learning Managment System (LMS) using the Sharable Content Object Reference Model (SCORM) developed at the US Department of Defence Advance Distributed Learning (ADL) Inititive. This software is provided 'as-is' and is available free of charge at http://www.adlnet.gov. This software may be used under the provisions of the Apache 2.0 license. Source code is available from www.adlnet.gov.  ","OK");
+		EditorUtility.DisplayDialog("Unity-SCORM Integration Toolkit Version 1.4 Beta","This software is a demonstation of integration between web deployed immersive 3D training and a Learning Managment System (LMS) using the Sharable Content Object Reference Model (SCORM) developed at the US Department of Defence Advance Distributed Learning (ADL) Inititive. This software is provided 'as-is' and is available free of charge at http://www.adlnet.gov. This software may be used under the provisions of the Apache 2.0 license. Source code is available from www.adlnet.gov.  ","OK");
     }
 	//Add this to the main editor gui
     [MenuItem("SCORM/Help",false,0)]
@@ -124,7 +124,7 @@ public class ScormExport : EditorWindow {
 				zip.AddItem(Application.dataPath + "/ADL SCORM/Plugins/2004");
 				string manifest = 
 								"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + 
-								"<!-- exported by Unity-SCORM Integration Toolkit Version 1.3 Beta-->"+
+								"<!-- exported by Unity-SCORM Integration Toolkit Version 1.4 Beta-->"+
 								"<manifest xmlns=\"http://www.imsglobal.org/xsd/imscp_v1p1\" xmlns:imsmd=\"http://www.imsglobal.org/xsd/imsmd_v1p2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:adlcp=\"http://www.adlnet.org/xsd/adlcp_v1p3\" xmlns:imsss=\"http://www.imsglobal.org/xsd/imsss\" xmlns:adlseq=\"http://www.adlnet.org/xsd/adlseq_v1p3\" xmlns:adlnav=\"http://www.adlnet.org/xsd/adlnav_v1p3\" identifier=\"MANIFEST-AECEF15E-06B8-1FAB-5289-73A0B058E2DD\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imscp_v1p1 imscp_v1p1.xsd http://www.imsglobal.org/xsd/imsmd_v1p2 imsmd_v1p2p2.xsd http://www.adlnet.org/xsd/adlcp_v1p3 adlcp_v1p3.xsd http://www.imsglobal.org/xsd/imsss imsss_v1p0.xsd http://www.adlnet.org/xsd/adlseq_v1p3 adlseq_v1p3.xsd http://www.adlnet.org/xsd/adlnav_v1p3 adlnav_v1p3.xsd\" version=\"1.3\">"+
 								"  <metadata>"+
 								"    <schema>ADL SCORM</schema>"
@@ -174,7 +174,7 @@ public class ScormExport : EditorWindow {
 				zip.AddItem(Application.dataPath + "/ADL SCORM/Plugins/1.2");
 				string manifest = 
 								"<?xml version=\"1.0\"?>"+
-								"<!-- exported by Unity-SCORM Integration Toolkit Version 1.3 Beta-->"+
+								"<!-- exported by Unity-SCORM Integration Toolkit Version 1.4 Beta-->"+
 								"<manifest identifier=\"SingleCourseManifest\" version=\"1.1\""+
 								"          xmlns=\"http://www.imsproject.org/xsd/imscp_rootv1p1p2\""+
 								"          xmlns:adlcp=\"http://www.adlnet.org/xsd/adlcp_rootv1p2\""+

@@ -1,6 +1,6 @@
 ﻿/***********************************************************************************************************************
  *
- * Unity-SCORM Integration Toolkit Version 1.3 Beta
+ * Unity-SCORM Integration Toolkit Version 1.4 Beta
  * ==========================================
  *
  * Copyright (C) 2011, by ADL (Advance Distributed Learning). (http://www.adlnet.gov)
