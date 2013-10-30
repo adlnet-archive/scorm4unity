@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
  *
- * Unity-SCORM Integration Toolkit Version 1.0 Beta
+ * Unity-SCORM Integration Toolkit Version 1.4 Beta
  * ==========================================
  *
  * Copyright (C) 2011, by ADL (Advance Distributed Learning). (http://www.adlnet.gov)
@@ -747,12 +747,14 @@ var scorm = (function(){
 function OLDdoGetValue(identifier,objectname,callbackname,randomnumber)
 {
 
-   document.getElementById('console').innerHTML = "Get " + identifier + "<br />" + document.getElementById('console').innerHTML;
+    if(document.getElementById('console'))
+		document.getElementById('console').innerHTML = "Get " + identifier + "<br />" + document.getElementById('console').innerHTML;
 	
    GetUnity().SendMessage(objectname, callbackname, "Hello from a web page!|"+randomnumber);
 }
 function DebugPrint(str)
 {
+if(document.getElementById('console'))
    document.getElementById('console').innerHTML = document.getElementById('console').innerHTML + str +"<br />";
 }
 function pausecomp(millis)
@@ -766,6 +768,7 @@ function pausecomp(millis)
 function OLDdoSetValue(identifier,value,objectname,callbackname,randomnumber)
 {
 
+	if(document.getElementById('console'))
     document.getElementById('console').innerHTML = "Set " + identifier + " to " + value + "<br />" + document.getElementById('console').innerHTML;
 	GetUnity().SendMessage(objectname, callbackname, "Hello from a web page!"+randomnumber+"|"+randomnumber);
 }
